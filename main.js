@@ -41,7 +41,7 @@ while(respuesta != "no"){
         alert("ingrese un valor valido")
         continue;
     }
-    tipoDeBolsa = prompt("ingrese tipo de bolsa cal, arena, cemento");
+    tipoDeBolsa = prompt("ingrese tipo de bolsa: cal, cemento , arena");
     tipoDeBolsa = tipoDeBolsa.toLowerCase();
     switch(tipoDeBolsa){
         case "cal":
