@@ -35,6 +35,21 @@ cal = parseInt(cal);
 cemento = parseInt(cemento);
 arena = parseInt(arena);
 
+class personas{
+    constructor(nombre, cal , cemento , arena , total , totalConDescuento , totalDelDescuento , totalDeBolsas){
+        this.nombre = nombre;
+        this.cal = cal;
+        this.cemento = cemento;
+        this.arena = arena;
+        this.total = total;
+        this.totalConDescuento = totalConDescuento;
+        this.totalDelDescuento = totalDelDescuento;
+        this.totalDeBolsas = totalDeBolsas;
+    } 
+}
+
+const descuentos = (a, b) => a * b;
+
 while(respuesta2 != "no"){
     nombre = prompt("Bienvenido, Ingrese su nombre:").toLowerCase();
     while(respuesta != "no"){
@@ -66,9 +81,6 @@ while(respuesta2 != "no"){
     }
     
     total = cal * 25 + arena * 50 + cemento * 40 ;
-    
-    console.log(total);
-    const descuentos = (a, b) => a * b
     
     if(totalDeBolsas >= 10 ){
         if(totalDeBolsas >= 20){
@@ -106,18 +118,6 @@ while(respuesta2 != "no"){
         alert("El valor total es de " + total + "$")
         totalDelDescuento = 0;
     }
-    class personas{
-        constructor(nombre, cal , cemento , arena , total , totalConDescuento , totalDelDescuento , totalDeBolsas){
-            this.nombre = nombre;
-            this.cal = cal;
-            this.cemento = cemento;
-            this.arena = arena;
-            this.total = total;
-            this.totalConDescuento = totalConDescuento;
-            this.totalDelDescuento = totalDelDescuento;
-            this.totalDeBolsas = totalDeBolsas;
-        } 
-    }
     clientes.push(new personas(nombre , cal , cemento, arena , total, totalConDescuento, totalDelDescuento, totalDeBolsas));
     consulta = prompt("¿Quiere hacer una consulta?").toLowerCase();
     if(consulta == "si"){
@@ -134,9 +134,9 @@ while(respuesta2 != "no"){
                 console.log("Pago $" + e.totalConDescuento);
                 console.log("Se ahorro $" + e.totalDelDescuento);
             });
+        }else{
+            console.log("No se encontro el nombre solicitado");
         }
-    }else{
-        console.log("No se encontro el nombre solicitado");
     }
 
     respuesta2 = prompt("¿Quiere Seguir utulizando el simulador?").toLowerCase();
