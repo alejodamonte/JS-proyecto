@@ -9,145 +9,109 @@ Si el usuario compra mas de 40 bolsas se hace un 30% de descuento.
 la aplicacion muestra el total, luego el precio que pagara con descuento y por ultimo la cantidad que se ahorro.
 
 */
-const clientes = [];
-let respuesta = "si";
-let respuesta2 = "si";
-let consulta = "no";
-let bolsas = 0;
-let tipoDeBolsa;
-let totalDeBolsas = 0;
-let totalConDescuento = 0;
-let totalDelDescuento = 0;
-let cal = 0;
-let cemento = 0;
-let arena = 0;
-let descuento = 0;
-let descuentoBolsas = 0;
-let total = 0;
-let nombre = "";
-let nombreAbuscar = "";
-let i = 1;
+let nombreInput = document.getElementById('nombre');
+let tipoInput = document.getElementsByName('opcion');
+let cantidadInput = document.getElementById('cantidad');
+let agregarBtn = document.getElementById('agregar');
+let terminarBtn = document.getElementById('terminar');
+let guardarBtn = document.getElementById('guardar');
+let listaCompras = document.querySelector('ol');
+let mensaje = document.getElementById('mensaje');
 
-totalConDescuento = parseInt(totalConDescuento);
-totalDelDescuento = parseInt(totalDelDescuento);
-total = parseInt(total);
-cal = parseInt(cal);
-cemento = parseInt(cemento);
-arena = parseInt(arena);
 
-class personas{
-    constructor(nombre, cal , cemento , arena , total , totalConDescuento , totalDelDescuento , totalDeBolsas){
-        this.nombre = nombre;
-        this.cal = cal;
-        this.cemento = cemento;
-        this.arena = arena;
-        this.total = total;
-        this.totalConDescuento = totalConDescuento;
-        this.totalDelDescuento = totalDelDescuento;
-        this.totalDeBolsas = totalDeBolsas;
-    } 
+let compras = [];
+
+function agregarCompra() {
+
+    let cantidad = parseInt(cantidadInput.value);
+    let nombre = nombreInput.value;
+    let tipoBolsa;
+
+    for (let i = 0; i < tipoInput.length; i++) {
+        if (tipoInput[i].checked) {
+            tipoBolsa = tipoInput[i].value;
+            break;
+        }
+    }
+
+    mensaje.textContent = '';
+
+    if (nombre && tipoBolsa && !isNaN(cantidad) && cantidad > 0) {
+        compras.push({ nombre: nombreInput.value, tipoBolsa, cantidad });
+        mensaje.style.color = 'green';
+        mensaje.textContent += 'Se agrego su compra correctamente';
+        cantidadInput.value = '';
+    } else {
+        mensaje.style.color = 'red';
+        if (!nombre) {
+            mensaje.textContent += '(Ingrese un nombre) ';
+        }
+        if (!tipoBolsa) {
+            mensaje.textContent += '(Ingrese el tipo de bolsa) ';
+        }
+        if (isNaN(cantidad) || cantidad < 0) {
+            mensaje.textContent += '(Ingrese una cantidad mayor 0) ';
+        }
+    }
+    console.log(compras);
 }
 
-const descuentos = (a, b) => a * b;
+agregarBtn.addEventListener('click', agregarCompra);
 
-while(respuesta2 != "no"){
-    nombre = prompt("Bienvenido, Ingrese su nombre:").toLowerCase();
-    while(respuesta != "no"){
-        bolsas = prompt("Ingrese cantidad de bolsas");
-        bolsas = parseInt(bolsas);
-        if(isNaN(bolsas)){
-            alert("ingrese un valor valido")
-            continue;
-        }
-        tipoDeBolsa = prompt("ingrese tipo de bolsa: cal, cemento , arena").toLowerCase();
-        switch(tipoDeBolsa){
-            case "cal":
-                cal += bolsas;
-                totalDeBolsas += bolsas;
-            break;
-            case "arena":
-                arena += bolsas;
-                totalDeBolsas += bolsas;
-            break;
-            case "cemento":
-                cemento += bolsas;
-                totalDeBolsas += bolsas;
-            break;
-            default:
-                alert("valor invalido");
-            break;
-        }
-        respuesta = prompt("¿Quiere seguir comprando?").toLowerCase();
-    }
-    
-    total = cal * 25 + arena * 50 + cemento * 40 ;
-    
-    if(totalDeBolsas >= 10 ){
-        if(totalDeBolsas >= 20){
-            if(totalDeBolsas >= 30){
-                if(totalDeBolsas > 40){
-                    totalConDescuento = descuentos(total,0.70);
-                    descuento = 1;
-                    descuentoBolsas = 30;
-                }
-                else{
-                    totalConDescuento = descuentos(total,0.85);
-                    descuento = 1;
-                    descuentoBolsas = 15;
-                }
+terminarBtn.addEventListener('click', () => {
+    let total = 0;
+    let totalBolsas = 0;
+    let nombreAbuscar = nombreInput.value;
+    let nombreEncontrado = compras.filter((e) => e.nombre === nombreAbuscar);
+    if (nombreEncontrado.length > 0) {
+        nombreEncontrado.forEach(e => {
+            if (e.tipoBolsa === 'Arena') {
+                total += e.cantidad * 50;
             }
-            else{
-                totalConDescuento = descuentos(total,0.90);
-                descuento = 1;
-                descuentoBolsas = 10;
+            if (e.tipoBolsa === 'Cal') {
+                total += e.cantidad * 40;
             }
-        }
-        else{
-            totalConDescuento = descuentos(total, 0.95);
-            descuento = 1;
-            descuentoBolsas = 5;
-        }
+            if (e.tipoBolsa === 'Cemento') {
+                total += e.cantidad * 30;
+            }
+            totalBolsas += e.cantidad;
+
+        });
     }
-    totalDelDescuento = total - totalConDescuento;
-    if(descuento == 1){
-        alert("El valor total sin descuento es de " + total + "$");
-        alert("El descuetno aplicado es de un " + descuentoBolsas + "%" + " y da un total de " + totalConDescuento + "$" )
-        alert("El descuento tiene un valor de " + totalDelDescuento + "$" );
-    }
-    else{
-        alert("El valor total es de " + total + "$")
-        totalDelDescuento = 0;
-    }
-    clientes.push(new personas(nombre , cal , cemento, arena , total, totalConDescuento, totalDelDescuento, totalDeBolsas));
-    consulta = prompt("¿Quiere hacer una consulta?").toLowerCase();
-    if(consulta == "si"){
-        nombreAbuscar = prompt("Ingrese el nombre que quiere buscar : ").toLowerCase();
-        let nombreEncontrado = clientes.filter((e)=> e.nombre === nombreAbuscar);
-        if(nombreEncontrado.length > 0){
-            nombreEncontrado.forEach(e => {
-                console.log("El nombre es " + e.nombre);
-                console.log("Compro  " + e.cal +" bolsas de cal");
-                console.log("Compro " + e.cemento + " bolsas de cemento");
-                console.log("Compro " + e.arena + " bolsas de arena");
-                console.log("En total compro " + e.totalDeBolsas + " bolsas");
-                console.log("Gasto en total : $" + e.total );
-                console.log("Pago $" + e.totalConDescuento);
-                console.log("Se ahorro $" + e.totalDelDescuento);
-            });
-        }else{
-            console.log("No se encontro el nombre solicitado");
-        }
+    let descuento = 0;
+    if (totalBolsas > 40) {
+        descuento = 0.30;
+    } else if (totalBolsas > 30) {
+        descuento = 0.15;
+    } else if (totalBolsas > 20) {
+        descuento = 0.10;
+    } else if (totalBolsas > 10) {
+        descuento = 0.05;
     }
 
-    respuesta2 = prompt("¿Quiere Seguir utulizando el simulador?").toLowerCase();
-    respuesta = "si";
-    totalDeBolsas = 0;
-    totalConDescuento = 0;
-    totalDelDescuento = 0;
-    total = 0;
-    descuentoBolsas = 0;
-    arena = 0;
-    cal = 0;
-    cemento = 0;
-    descuento = 0;
+
+    let totalConDescuento = total - total * descuento;
+    let totalAhorro = total * descuento;
+
+    let resultados = `Total de bolsas: ${totalBolsas}\nTotal a pagar: $${total}\nTotal con Descuento: $${totalConDescuento}\nAhorro: $${totalAhorro}`;
+
+    let nuevaCompra = document.createElement('li');
+    nuevaCompra.innerText = resultados;
+    listaCompras.append(nuevaCompra);
+});
+
+
+guardarBtn.addEventListener('click', () => {
+    localStorage.setItem('compras', JSON.stringify(compras));
+    alert('Compras guardadas correctamente.');
+});
+
+
+if (localStorage.getItem('compras')) {
+    compras = JSON.parse(localStorage.getItem('compras'));
+    compras.forEach(compra => {
+        let nuevaCompra = document.createElement('li');
+        nuevaCompra.textContent = `${compra.nombre} compró ${compra.cantidad} bolsas `;
+        listaCompras.appendChild(nuevaCompra);
+    });
 }

@@ -1,23 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>Preentrega N°2</h1>
     <h2>Simulador de descuentos</h2>
     <p>
-        Es un simulador de compra de bolsas de cemento, cal y arena, el mismo tiene un sistema para aplicar un descuento dependiendo de la cantidad de bolsas totales compradas,
+        Es un simulador de compra de bolsas de cemento, cal y arena, el mismo tiene un sistema para aplicar un descuento
+        dependiendo de la cantidad de bolsas totales compradas,
         Si el usuario compra mas de 10 bolsas se hace un 5% de descuento.
         Si el usuario compra mas de 20 bolsas se hace un 10% de descuento.
         Si el usuario compra mas de 30 bolsas se hace un 15% de descuento.
         Si el usuario compra mas de 40 bolsas se hace un 30% de descuento.
         la aplicacion muestra el total, luego el precio que pagara con descuento y por ultimo la cantidad que se ahorro.
-        Se implemento una busqueda con el nombre del comprador para saber cuantas bolsas compra que cantidad de cada una y cuanto gasto. El mismo se muestra por consola y ademas
+        Se implemento una busqueda con el nombre del comprador para saber cuantas bolsas compra que cantidad de cada una
+        y cuanto gasto. El mismo se muestra por consola y ademas
         si no se encuentra el nombre se da un mensaje.
     </p>
+    <form id="formulario" action="#" method="GET" enctype="multipart/form-data">
+        <h3>Ingrese Nombre y apellido</h3>
+        <input id="nombre" type="text" placeholder="Nombre">
+        <div id="tipo">
+            <h3>Seleccione el tipo de bolsa que desea comprar</h3>
+            <input type="radio" name="opcion" value="Arena"> Arena
+            <br>
+            <input type="radio" name="opcion" value="Cal"> Cal
+            <br>
+            <input type="radio" name="opcion" value="Cemento"> Cemento
+            <br>
+        </div>
+        <h3>Ingrese la cantidad que desea comprar</h3>
+        <input id="cantidad" type="number" placeholder="cantidad">
+        <br>
+        <span id="mensaje" ></span>
+        <br>
+        <input id="agregar" type="button" value="Agregar articulo"> 
+        <br>
+        <input id="terminar" type="button" value="Terminar compra">
+        <br>
+        <input id="guardar" type="button" value="Guardar compras">
+    </form>
+    <h3>Ultimas compras: </h3>
+    <ol>
+
+    </ol>
 </body>
 <script src="main.js"></script>
+
 </html>
